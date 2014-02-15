@@ -9,7 +9,11 @@ define([
 
   $.CORS({
     host:     Config.apiHost,
-    timeout:  Config.xhr.timeout
+    timeout:  Config.xhr.timeout,
+    mutator: function(options) {
+      options.data = options.data || {};
+      options.data.user_agent = 'toggl_stats';
+    }
   });
 
   $.ajaxSetup({
@@ -24,6 +28,11 @@ define([
         return $.parseJSON(response);
       }
     }
+  });
+
+  $(document).ajaxSend(function(event, xhr, settings) {
+    xhr.setRequestHeader('Authorization',
+      'Basic ' + btoa(App.apiToken + ':api_token'));
   });
 
   // Disable disabled links!

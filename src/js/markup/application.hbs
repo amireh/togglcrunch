@@ -1,0 +1,25 @@
+<div>
+  <h3>{{t 'sign_in' 'Sign in'}}</h3>
+  <form>
+    <label for="apiToken">
+      {{t 'api_token' "API Token"}}
+    </label>
+    <input
+      type="text"
+      name="apiToken"
+      id="apiToken"
+      placeholder="Your Toggl API Token"
+      value="f95069a38285be3a529d1e0a0e239659" />
+    <input type="submit" value="{{t 'refresh' 'Refresh'}}" />
+  </form>
+
+  <nav class="columns four">
+    <div data-container="WorkspacesView"></div>
+  </nav>
+
+  <div id="content" class="columns twelve">
+    <div data-container="DatepickerView"></div>
+    <div data-container="MilestonesView"></div>
+    <div data-container="Statusbar"></div>
+  </div>
+</div>

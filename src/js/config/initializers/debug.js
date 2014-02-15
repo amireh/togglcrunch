@@ -8,9 +8,10 @@ var DEBUG = {
 define([
   'config',
   'when',
-  'pikaday'
+  'pikaday',
+  'ext/backbone'
 ],
-function(CONFIG, when, pikaday) {
+function(CONFIG, when, pikaday, Backbone) {
   Root.TRACE = function() {
     try {
       throw new Error();
@@ -30,6 +31,18 @@ function(CONFIG, when, pikaday) {
 
     return false;
   };
+
+  Backbone.Registry.addDependency('user', DEBUG);
+  Backbone.Registry.addDependency('state', DEBUG);
+
+
+  _.defer(function() {
+    if (this.App) {
+      App.ApplicationView.refreshApiToken();
+    };
+
+    DEBUG.state.date = moment.utc('2014-02-13', 'YYYY-MM-DD');
+  });
 
   DEBUG.pikaday = pikaday;
 

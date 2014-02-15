@@ -7,9 +7,13 @@ requirejs.config({
     'when': '../../vendor/js/when',
     'store': '../../vendor/js/store',
     'lodash': '../../vendor/js/lodash/lodash.custom',
+    'underscore': '../../vendor/js/lodash/lodash.custom',
+    'backbone': '../../vendor/js/backbone/backbone',
+    'backbone.nested': '../../vendor/js/backbone/deep-model',
     'pikaday': '../../vendor/js/pikaday',
     'inflection': '../../vendor/js/inflection',
     'moment': '../../vendor/js/moment',
+    'moment-range': '../../vendor/js/moment-range',
     'd3': '../../vendor/js/d3.v3',
     'Handlebars': '../../vendor/js/handlebars',
     'hbs': '../../vendor/js/require/hbs',
@@ -21,13 +25,20 @@ requirejs.config({
     'jquery': { exports: 'jQuery' },
     'jquery.jquerypp': [ 'jquery' ],
     'lodash': { exports: '_' },
+    'underscore': { exports: '_' },
     'store': { exports: 'store' },
     'moment': { exports: 'moment' },
+    'moment-range': [ 'moment' ],
     'inflection': [],
     'pikaday': { exports: 'Pikaday', deps: [ 'lodash', 'moment' ] },
     'd3': { exports: 'd3' },
     'Handlebars': { exports: 'Handlebars' },
-    'defaultLocale': []
+    'defaultLocale': [],
+    'backbone': {
+      exports: 'Backbone',
+      deps: [ 'jquery', 'lodash' ]
+    },
+    'backbone.nested': [ 'backbone', 'lodash' ]
   },
 
   hbs: {
@@ -37,14 +48,22 @@ requirejs.config({
   }
 });
 
-require([ 'config/initializer' ], function(initialize) {
+require([ 'config/initializer', 'views/application', 'router' ], function(initialize, AppView, Router) {
   // Transform the blunt 'App' object into Core::State.
   //
   // App so far may contain callbacks by external scripts found in App.Callbacks
   // which we've extracted above.
   App = {};
 
-  initialize().catch(function(e) {
+  initialize()
+  .then(function() {
+    return Router.start(true);
+  })
+  .then(function() {
+    var appView = App.ApplicationView = new AppView();
+    return appView._render();
+  })
+  .catch(function(e) {
     _.defer(function() {
       console.warn('Boot error:');
       throw e;

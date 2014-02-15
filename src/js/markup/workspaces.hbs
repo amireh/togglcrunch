@@ -1,0 +1,15 @@
+<div id="userWorkspaces">
+  <h3>{{t 'choose_workspace' 'Choose a Workspace'}}</h3>
+  <ul>
+  <!-- <select name="workspace"> -->
+    <!-- <option value="0">--</option> -->
+    {{#each workspaces}}
+      <li><a href="/workspaces/{{id}}">{{name}}</a></li>
+    {{/each}}
+  </ul>
+  <!-- </select> -->
+
+  <button data-action="loadTimeEntries">
+    {{t 'load' 'Load'}}
+  </button>
+</div>

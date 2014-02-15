@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'sinatra', :require => 'sinatra'
+gem 'sinatra-cross_origin',
+  :github => 'britg/sinatra-cross_origin',
+  :require => 'sinatra/cross_origin'
+
+gem 'rest-client',
+  :github => 'rest-client/rest-client',
+  :require => 'rest_client'
