@@ -4,7 +4,7 @@ module.exports = {
       baseUrl: 'src/js',
       out: 'www/dist/app.js',
       mainConfigFile: 'src/js/main.js',
-      optimize: 'uglify',
+      optimize: 'uglify2',
 
       paths: {
         requireLib: '../../vendor/js/require'

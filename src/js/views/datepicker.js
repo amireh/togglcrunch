@@ -1,4 +1,5 @@
-define([ 'view', 'hbs!datepicker', 'pikaday'], function(View, Template, Pikaday) {
+define([ 'view', 'hbs!datepicker', 'moment', 'pikaday'],
+function(View, Template, moment, Pikaday) {
   'use strict';
 
   return View.extend({
@@ -12,6 +13,12 @@ define([ 'view', 'hbs!datepicker', 'pikaday'], function(View, Template, Pikaday)
         field: this.$('#datepicker')[0],
         trigger: this.$('span[data-action="show"]'),
         onSelect: _.bind(this.changeDate, this),
+        onOpen: function() {
+          $('body').addClass('shaded');
+        },
+        onClose: function() {
+          $('body').removeClass('shaded');
+        },
         position: 'top right'
       });
     },
