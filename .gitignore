@@ -1,6 +1,4 @@
 [autogen]
-/www/dist
-/www/assets/locales/*.json
 /doc/api
 /.jshint.html
 /tests.html

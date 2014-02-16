@@ -1,0 +1,13 @@
+{
+  "en": {
+    "week": "Week __number__",
+    "status": {
+      "login_prompt": "You must login to proceed.\n"
+    },
+    "tooltips": {
+      "api_token_help_title": "Toggl API Token",
+      "api_token_help": "<p>TogglCrunch requires your Toggl API token to read your data.</p> <p>\n  You can find your API token in your profile at\n  <a href='https://new.toggl.com/app/#profile' target='_blank'>www.toggl.com</a>\n</p>\n",
+      "reload_data": "Reload the page with the latest data.\n"
+    }
+  }
+}
