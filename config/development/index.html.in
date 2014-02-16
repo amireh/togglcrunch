@@ -26,6 +26,6 @@
     </div>
     <div id="main"></div>
 
-    <script data-main="/dist/app.js"></script>
+    <script data-main="/dist/app.js" src="/vendor/js/require.js"></script>
  </body>
 </html>

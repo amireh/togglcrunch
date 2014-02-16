@@ -33,6 +33,8 @@ define([ 'view', 'hbs!login'], function(View, Template) {
         that.state.save();
         that.statusbar.tick(0);
         that.applicationRouter.redirectTo('/');
+      }).otherwise(function() {
+        that.statusbar.set(i18n.t('status.login_failure'));
       });
     }
   });

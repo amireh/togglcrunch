@@ -2,7 +2,8 @@
   "en": {
     "week": "Week __number__",
     "status": {
-      "login_prompt": "You must login to proceed.\n"
+      "login_prompt": "You must login to proceed.\n",
+      "login_failure": "Unable to authenticate. Please verify your API token.\n"
     },
     "tooltips": {
       "api_token_help_title": "Toggl API Token",

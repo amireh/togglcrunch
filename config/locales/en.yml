@@ -3,6 +3,8 @@ en:
   status:
     login_prompt: >
       You must login to proceed.
+    login_failure: >
+      Unable to authenticate. Please verify your API token.
   tooltips:
     api_token_help_title: Toggl API Token
     api_token_help: >

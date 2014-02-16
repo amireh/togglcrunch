@@ -96,13 +96,16 @@ module.exports = function(grunt) {
     shell.exec('cd www/dist; ln -s ../../src/js/main.js ./app.js');
     shell.exec('cd www/; ln -s ../src ./');
     shell.exec('cd www/; ln -s ../vendor ./');
+    shell.exec('cp config/development/index.html.in www/index.html');
 
     grunt.task.run('compile:css');
   });
+
   grunt.registerTask('production',
   'Cleans up after the development environment.',
   function() {
     shell.exec('[ -s www/src ] && rm www/src');
     shell.exec('[ -s www/vendor ] && rm www/vendor');
+    shell.exec('cp config/production/index.html.in www/index.html');
   });
 };

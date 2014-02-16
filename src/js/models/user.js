@@ -44,7 +44,7 @@ define([
           _.findWhere(data.workspace.users, { id: data.user.id }).name);
 
         return data;
-      }).otherwise(DEBUG.onError);
+      });
     }
   });
 

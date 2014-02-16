@@ -6,6 +6,10 @@ module.exports = {
       mainConfigFile: 'src/js/main.js',
       optimize: 'uglify',
 
+      paths: {
+        requireLib: '../../vendor/js/require'
+      },
+
       removeCombined:           false,
       inlineText:               true,
       preserveLicenseComments:  false,
@@ -47,7 +51,7 @@ module.exports = {
       },
 
       name: 'main',
-      include: [ 'main' ]
+      include: [ 'main', 'requireLib' ]
     }
   }
 };
