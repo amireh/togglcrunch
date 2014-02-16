@@ -11,7 +11,7 @@ define('config', [ 'lodash' ], function(_) {
 
     version: '1.0.0',
     apiHost: 'https://toggl.com/reports/api/v2',
-    apiToken: '',
+    // apiToken: '',
 
     dateFormat: 'YYYY[-]MM[-]DD',
 

@@ -1,6 +1,9 @@
-<div>
-  <h3>{{t 'choose_date' 'Choose a Date'}}</h3>
-  <div>
-    <input type="text" name="date" id="datepicker" value="{{date}}" />
+<div id="datepickerView">
+  <div title="{{t 'choose_date' 'Choose a Date'}}">
+    <span class="btn btn-default" data-action="show">{{t 'change_date' 'Change Date'}}</span>
+    <input
+      type="text"
+      name="date" id="datepicker" value="{{date}}"
+      class="invisible-field" />
   </div>
 </div>

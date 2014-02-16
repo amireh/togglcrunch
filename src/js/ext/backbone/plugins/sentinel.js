@@ -112,8 +112,6 @@ define([ 'ext/backbone/plugin' ], function(Plugin) {
 
       // Need to restore #extend in the ctor itself and not the prototype.
       Backbone[target].extend = EXTEND;
-
-      // this.log(target, 'instances will be triggering', evtCreated, 'when spawned.');
     },
 
     __restoreTarget: function(target) {

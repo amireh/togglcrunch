@@ -4,7 +4,11 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
   return View.extend({
     name: 'WorkspacesView',
     template: Template,
-    requires: [ 'user', 'state' ],
+    requires: [ 'user', 'state', 'statusbar', 'applicationRouter' ],
+
+    events: {
+      'change': 'gotoWorkspace'
+    },
 
     buffer: [],
 
@@ -18,6 +22,21 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
       this.listenTo(this.user, 'change:workspaces', this.reload);
       this.listenTo(this.state, 'change:date', this.onLoadTimeEntries);
       this.listenTo(this.state, 'change:activeWorkspace', this.onLoadTimeEntries);
+
+      this.loadTimeEntries();
+    },
+
+    gotoWorkspace: function() {
+      var workspaceId = parseInt(this.$(':selected').val(), 10);
+      var workspace = this.user.workspaces.get(workspaceId);
+      var workspaceUrl;
+
+      if (!workspace) {
+        return;
+      }
+
+      workspaceUrl = '/workspaces/' + workspaceId;
+      this.applicationRouter.redirectTo(workspaceUrl);
     },
 
     onLoadTimeEntries: function() {
@@ -34,17 +53,18 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
       if (!this.loading) {
         this.loading = when.defer();
         this.loading.promise.then(function(data) {
-          console.debug('loading done!');
           that.setTimeEntries(that.buffer, data);
           that.buffer = [];
           that.poolSz = that.bufferSz = 0;
+          that.state.trigger('loaded:timeEntries');
+          that.statusbar.set(i18n.t('status.ready', 'Ready.')).tick(0);
+
           return data;
         });
 
         // Statusbar updates
         this.loading.promise.then(null, null, function() {
-          console.debug('loading: ticking...');
-          App.statusbar.tick(that.bufferSz / that.poolSz * 100);
+          that.statusbar.tick(that.bufferSz / that.poolSz * 100);
         });
 
         this.loading.promise.catch(DEBUG.onError);
@@ -53,15 +73,18 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
       this.current = this.state.activeWorkspace;
 
       if (!this.current) {
-        App.statusbar
-          .set(i18n.t('status.must_choose_workspace', 'You must choose a workspace first!'));
+        this.statusbar
+          .set(i18n.t('status.must_choose_workspace',
+            'You must choose a workspace first!'));
 
         return;
       }
 
-      App.statusbar
+      this.statusbar
         .set(i18n.t('status.loading_time_entries', 'Loading time entries...'))
-        .tick('100');
+        .tick('0');
+
+      this.state.trigger('loading:timeEntries');
 
       $.ajaxCORS({
         url: 'details',
@@ -72,11 +95,17 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
           until: this.state.dateRange.end.format('L')
         }
       }).then(function(data) {
+        if (!that.loading) { // loading was cancelled or re-run
+          return;
+        }
+
         var cursor = page * data.per_page;
 
         that.buffer = _.union(that.buffer, data.data);
         that.poolSz = data.total_count;
         that.bufferSz = that.buffer.length;
+
+        that.loading.notify();
 
         if (data.total_count > cursor) {
           // need to load next page
@@ -91,7 +120,7 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
         return that.loading;
       })
       .otherwise(function(error) {
-        App.statusbar.set('Unable to load data.');
+        that.statusbar.set('Unable to load data.');
         DEBUG.onError(error);
         return error;
       });
@@ -100,7 +129,7 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
     },
 
     setTimeEntries: function(entries, stats) {
-      this.debug('setting time entries:', entries);
+      console.debug('setting time entries:', entries);
       this.user.set('time_entries', [], { silent: true });
       this.user.set('time_entries', entries);
       this.user.set('time_entry_stats', {

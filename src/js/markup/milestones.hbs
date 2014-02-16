@@ -1,24 +1,48 @@
-<div id="milestones" class="container clearfix">
-  <section class="today-progress sixteen columns">
-    <h3>{{day.label}}</h3>
-    <p><strong>{{t 'target' "Target"}}</strong>: {{milestones.daily}}</p>
+<div id="milestones">
+  <section class="panel today-progress sixteen columns">
+    <h2>
+      {{day.label}}
+      <small class="pull-right">
+        {{float day.hours}}/{{milestones.daily}} {{t 'hours' 'hours'}}
+      </small>
+    </h2>
 
     <div class="progress">
-      <div class="progress-bar" data-width="{{day.ratio}}%"></div>
+      <div class="progress-bar {{colorize day.ratio}}" data-width="{{day.ratio}}%"></div>
     </div>
   </section>
 
-  <section class="monthly-progress sixteen columns">
-    <h3>{{t month.label month.label}}</h3>
-    <p><strong>{{t 'target' "Target"}}</strong>: {{milestones.monthly}}</p>
+  <section class="panel month-progress">
+    <h2>
+      {{month.label}}
+      <small class="pull-right">
+        {{float month.hours}}/{{milestones.monthly}} {{t 'hours' 'hours'}}
+      </small>
+    </h2>
 
-    {{#each month.weeklyRatios}}
-      <div class="weekly-progress four columns alpha">
-        <strong>{{t 'week' 'Week' number=index}}</strong>
-        <div class="progress">
-          <div class="progress-bar" data-width="{{this.ratio}}%"></div>
+    <div class="row">
+      {{#each weeks.weeklyRatios}}
+        <div class="weekly-progress col-md-3">
+          <header>
+            <strong>{{t 'week' 'Week' number=index}}</strong>
+            <small class="pull-right text-muted">
+              {{float this.hours}}/{{../milestones.weekly}}
+            </small>
+          </header>
+
+          <div class="progress">
+            <div class="progress-bar {{colorize this.ratio}}" data-width="{{this.ratio}}%"></div>
+          </div>
         </div>
-      </div>
-    {{/each}}
+      {{/each}}
+    </div>
+
+    <header>
+      <strong>{{t 'month' 'Month'}}</strong>
+    </header>
+
+    <div class="progress">
+      <div class="progress-bar {{colorize month.ratio}}" data-width="{{month.ratio}}%"></div>
+    </div>
   </section>
 </div>

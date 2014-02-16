@@ -1,4 +1,4 @@
-define([ 'view', 'hbs!milestones' ], function(View, Template) {
+define([ 'view', 'hbs!milestones', 'views/datepicker' ], function(View, Template, DPView) {
   'use strict';
 
   return View.extend({
@@ -6,10 +6,12 @@ define([ 'view', 'hbs!milestones' ], function(View, Template) {
     template: Template,
 
     requires: [ 'user', 'state' ],
+    // children: [ DPView ],
 
     mount: function() {
       this.listenTo(this.user.timeEntries, 'reset', this.reload);
-      // this.listenTo(this.state, 'change:date', this.reload);
+      this.listenTo(this.state, 'loading:timeEntries', this.hide);
+      this.listenTo(this.state, 'loaded:timeEntries', this.show);
 
       this.$('[data-width]').each(function() {
         _.defer(function() {
@@ -18,28 +20,34 @@ define([ 'view', 'hbs!milestones' ], function(View, Template) {
       });
     },
 
+    hide: function() {
+      this.$el.animate({ opacity: 0.25 }, 250);
+    },
+
+    show: function() {
+      this.$el.animate({ opacity: 'show' }, 750);
+    },
+
     getMilestones: function() {
-      return {
-        monthly: 160,
-        weekly: 40.0,
-        daily: 8
-      };
+      return this.state.get('milestones');
     },
 
     templateData: function() {
       return {
         milestones: this.getMilestones(),
         month: this.parseMonthData(this.state.date, this.user.timeEntries),
+        weeks: this.parseWeeksData(this.state.date, this.user.timeEntries),
         day: this.parseDayData(this.state.date, this.user.timeEntries)
       };
     },
 
-    parseMonthData: function(date, timeEntries) {
+    parseWeeksData: function(date, timeEntries) {
       var entries = [];
       var month = date.month();
       var data = {
-        label: date.format('MMMM, YYYY'),
-        weeklyRatios: []
+        label: date.format('MM/YYYY'),
+        weeklyRatios: [],
+        hours: 0
       };
 
       entries.push(timeEntries.weekEntries(1, month));
@@ -48,10 +56,16 @@ define([ 'view', 'hbs!milestones' ], function(View, Template) {
       entries.push(timeEntries.weekEntries(4, month));
 
       data.weeklyRatios = _(entries).map(function(entries, index) {
-        return {
+
+        var weekData = {
           index: index+1,
-          ratio: this.ratioFor(entries, 'weekly')
-        }
+          ratio: this.ratioFor(entries, 'weekly'),
+          hours: entries.hours()
+        };
+
+        data.hours += weekData.hours;
+
+        return weekData;
       }, this);
 
       return data;
@@ -59,11 +73,24 @@ define([ 'view', 'hbs!milestones' ], function(View, Template) {
 
     parseDayData: function(date, timeEntries) {
       var data = {
-        label: date.format('DD[/]MM[/]YYYY')
+        label: date.calendar()
       };
 
       data.entries = timeEntries.dayEntries();
       data.ratio = this.ratioFor(data.entries, 'daily');
+      data.hours = data.entries.hours();
+
+      return data;
+    },
+
+    parseMonthData: function(date, timeEntries) {
+      var data = {
+        label: date.format('MMMM, YYYY')
+      };
+
+      data.entries = timeEntries;
+      data.ratio = this.ratioFor(data.entries, 'monthly');
+      data.hours = data.entries.hours();
 
       return data;
     },

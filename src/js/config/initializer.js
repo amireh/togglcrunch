@@ -7,6 +7,8 @@ define([
   'ext/lodash',
   'ext/handlebars',
   'ext/jquery',
+  'core/viewport',
+  'core/controller',
   'models/state',
   'models/user',
   //>>excludeStart("production", pragmas.production);

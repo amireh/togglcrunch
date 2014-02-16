@@ -48,7 +48,12 @@ requirejs.config({
   }
 });
 
-require([ 'config/initializer', 'views/application', 'router' ], function(initialize, AppView, Router) {
+require([
+  'config/initializer',
+  'core/viewport',
+  'router',
+  'models/state'
+], function(initialize, Viewport, Router, State) {
   // Transform the blunt 'App' object into Core::State.
   //
   // App so far may contain callbacks by external scripts found in App.Callbacks
@@ -57,11 +62,20 @@ require([ 'config/initializer', 'views/application', 'router' ], function(initia
 
   initialize()
   .then(function() {
-    return Router.start(true);
+    return Viewport.start();
   })
   .then(function() {
-    var appView = App.ApplicationView = new AppView();
-    return appView._render();
+    return State.fetch().then(function() {
+      if (State.get('apiToken')) {
+        return State.user.fetch();
+      }
+      else {
+        return true;
+      }
+    });
+  })
+  .always(function() {
+    return Router.start(true);
   })
   .catch(function(e) {
     _.defer(function() {

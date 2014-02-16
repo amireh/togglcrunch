@@ -30,11 +30,6 @@ define([
     }
   });
 
-  $(document).ajaxSend(function(event, xhr, settings) {
-    xhr.setRequestHeader('Authorization',
-      'Basic ' + btoa(App.apiToken + ':api_token'));
-  });
-
   // Disable disabled links!
   $(document.body).on('click', '.disabled, :disabled', $.consume);
 

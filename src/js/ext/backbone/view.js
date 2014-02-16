@@ -94,7 +94,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
         signalRendered = _.bind(resolver.resolve, resolver);
       }
 
-      this.renderSubviews().then(signalRendered);
+      this.renderChildren().then(signalRendered);
 
       return this;
     },
@@ -124,7 +124,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       var that = this;
 
       if (this._rendering) {
-        this.warn('Rejecting request to render; currently busy.');
+        console.warn('Rejecting request to render; currently busy.');
         return this._rendering;
       }
 
@@ -146,14 +146,14 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       deferred.promise.then(function() {
         return that.mount();
       }).otherwise(function(error) {
-        that.error('Mounting failed:', error.stack, arguments);
+        console.error('Mounting failed:', error.stack, arguments);
         deferred.reject(error);
       });
 
       when(that.load()).then(function() {
         return that.render(options, deferred.resolver);
       }).otherwise(function(error) {
-        that.error('Rendering failed:', error.stack, arguments);
+        console.error('Rendering failed:', error.stack, arguments);
         deferred.reject(error);
       });
 
@@ -204,7 +204,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       }
 
       return when.all([
-        this.removeSubviews(),
+        this.removeChildren(),
         this.undelegateActions()
       ], signalRemoved);
     },
@@ -220,7 +220,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       var that = this;
 
       if (this._removing) {
-        this.warn('Rejecting request to remove; currently busy.');
+        console.warn('Rejecting request to remove; currently busy.');
         return this._removing;
       }
 
@@ -246,7 +246,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
 
       // A removal job in progress?
       if (this._removing) {
-        this.warn('Will not reload just yet; a removal job is in progress.');
+        console.warn('Will not reload just yet; a removal job is in progress.');
 
         // Queue a rendering job after the current removal job is done
         return this._removing.ensure(function() {
@@ -255,7 +255,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       }
       // A rendering job in progress?
       else if (this._rendering) {
-        this.warn('Will not reload just yet; a rendering job is in progress.');
+        console.warn('Will not reload just yet; a rendering job is in progress.');
 
         // Queue a reloading job after the current render job is done
         return this._rendering.ensure(function() {
@@ -365,7 +365,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       }
     },
 
-    renderSubviews: function() {
+    renderChildren: function() {
       var that = this;
 
       this._children = [];
@@ -388,7 +388,7 @@ define([ 'jquery', 'backbone', 'when' ], function($, Backbone, when) {
       return when.all(_.invoke(this._children, '_render'));
     },
 
-    removeSubviews: function() {
+    removeChildren: function() {
       return when.all(_.invoke(this._children, '_remove'));
     }
   });  // Backbone.View.prototype extensions

@@ -34,14 +34,23 @@ function(CONFIG, when, pikaday, Backbone) {
 
   Backbone.Registry.addDependency('user', DEBUG);
   Backbone.Registry.addDependency('state', DEBUG);
-
+  Backbone.Registry.addDependency('applicationRouter', DEBUG);
+  Backbone.Registry.addDependency('viewport', DEBUG);
 
   _.defer(function() {
-    if (this.App) {
-      App.ApplicationView.refreshApiToken();
-    };
+    DEBUG.user.set('name', 'Ahmad');
 
     DEBUG.state.date = moment.utc('2014-02-13', 'YYYY-MM-DD');
+    DEBUG.user.on('change:workspaces', function(ws) {
+      setTimeout(function() {
+        if (!DEBUG.applicationRouter.isAuthorized()) {
+          return;
+        }
+
+        DEBUG.applicationRouter.redirectTo(
+          '/workspaces/' + DEBUG.user.workspaces.first().get('id'));
+      }, 10);
+    });
   });
 
   DEBUG.pikaday = pikaday;

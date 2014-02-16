@@ -70,8 +70,6 @@ define([ 'ext/backbone/plugin' ], function(Plugin) {
       entry = this.moduleEntry(moduleId);
       entry.module = module;
 
-      this.debug('Module defined:', entry.id);
-
       this.resolve(entry);
     },
 
@@ -115,8 +113,6 @@ define([ 'ext/backbone/plugin' ], function(Plugin) {
 
       // Track the dependant
       entry.dependants.push(dependant);
-
-      this.debug('dependency:', '[' + dependant + '] => [' + entry.id + ']');
 
       // Expose the module to the dependant:
       //
@@ -178,9 +174,6 @@ define([ 'ext/backbone/plugin' ], function(Plugin) {
 
         resolved.push(dependant.toString());
       });
-
-      this.debug(module + ' =>', resolved.length, 'dependencies have been resolved (',
-        resolved.join(', '), ')');
 
       // Untrack them
       entry.dependants = [];

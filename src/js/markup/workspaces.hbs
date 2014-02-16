@@ -1,15 +1,10 @@
-<div id="userWorkspaces">
-  <h3>{{t 'choose_workspace' 'Choose a Workspace'}}</h3>
-  <ul>
-  <!-- <select name="workspace"> -->
-    <!-- <option value="0">--</option> -->
-    {{#each workspaces}}
-      <li><a href="/workspaces/{{id}}">{{name}}</a></li>
-    {{/each}}
-  </ul>
-  <!-- </select> -->
-
-  <button data-action="loadTimeEntries">
-    {{t 'load' 'Load'}}
-  </button>
-</div>
+<ul class="nav navbar-nav navbar-right" id="userWorkspaces">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{t 'workspace' 'Workspace'}} <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      {{#each workspaces}}
+        <li><a href="/workspaces/{{id}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
+  </li>
+</ul>

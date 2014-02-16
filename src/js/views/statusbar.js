@@ -5,13 +5,16 @@ define([ 'view', 'hbs!statusbar' ], function(View, Template) {
     name: 'Statusbar',
     template: Template,
 
+    module: 'statusbar',
+
     set: function(message) {
       this.$('#message').text(message);
       return this;
     },
 
     tick: function(percentage) {
-      this.$('#bar').css({
+      console.debug('ticking:', percentage);
+      this.$('.progress-bar').css({
         width: percentage + '%'
       });
       return this;

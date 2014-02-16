@@ -1,25 +1,51 @@
-<div>
-  <h3>{{t 'sign_in' 'Sign in'}}</h3>
-  <form>
-    <label for="apiToken">
-      {{t 'api_token' "API Token"}}
-    </label>
-    <input
-      type="text"
-      name="apiToken"
-      id="apiToken"
-      placeholder="Your Toggl API Token"
-      value="f95069a38285be3a529d1e0a0e239659" />
-    <input type="submit" value="{{t 'refresh' 'Refresh'}}" />
-  </form>
+<div class="container-fluid">
+  <header id="applicationHeader">
+    <div class="row navbar navbar-default">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">TogglCrunch</a>
+      </div>
 
-  <nav class="columns four">
-    <div data-container="WorkspacesView"></div>
-  </nav>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-action="reload">{{t 'reload' 'Reload'}}</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout">{{t 'logout' 'Logout'}}</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div
+          class="nav navbar-nav navbar-right"
+          data-container="WorkspacesView"></div>
+      </div><!-- /.nav-collapse -->
+    </div>
 
-  <div id="content" class="columns twelve">
-    <div data-container="DatepickerView"></div>
+  </header>
+
+  <div class="alert alert-info" id="workspaceRequiredAlert">
+    {{t 'workspace_required' 'You must choose a workspace first.'}}
+  </div>
+
+  <div id="content">
     <div data-container="MilestonesView"></div>
+
+    <hr />
+
+    <div class="text-right">
+      <button data-action="reload" class="btn btn-success">
+        {{t 'reload' 'Reload'}}
+      </button>
+
+      <div class="inline" data-container="DatepickerView"></div>
+    </div>
+
     <div data-container="Statusbar"></div>
   </div>
 </div>

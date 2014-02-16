@@ -25,15 +25,7 @@ function(Backbone, $, when) {
     module: 'applicationRouter',
 
     requires: [ 'user', 'state' ],
-
-    /**
-     * @property {String[]} routes
-     *
-     * Available routes.
-     */
-    routes: {
-      'workspaces/:workspace_id': 'activateWorkspace'
-    },
+    routes: {},
 
     /**
      * @property {String} currentRoute
@@ -91,7 +83,7 @@ function(Backbone, $, when) {
           return false;
         }
 
-        // accessRc = that._validateAccess(handler.router, fragment);
+        accessRc = that._validateAccess(handler.router, fragment);
 
         switch(accessRc) {
           case ACCESS_UNAUTHORIZED:
@@ -151,7 +143,7 @@ function(Backbone, $, when) {
     back: function() {
       var destination = this.previousRoute || '/';
 
-      this.debug('Back to:', destination);
+      console.debug('Back to:', destination);
 
       return this.redirectTo(destination, false);
     },
@@ -181,12 +173,12 @@ function(Backbone, $, when) {
         return this;
       }
 
-      this.debug('Redirecting ['+currentUri+'] => ['+uri+']');
+      console.debug('Redirecting ['+currentUri+'] => ['+uri+']');
 
       this.previousRoute = currentUri;
       this.currentRoute = uri;
 
-      this.debug('Current route:', this.currentRoute);
+      console.debug('Current route:', this.currentRoute);
 
       return this.history.navigate(uri, {
         silent: false,
@@ -231,12 +223,7 @@ function(Backbone, $, when) {
      * @return {Boolean} Whether the user is running an authentic session.
      */
     isAuthorized: function() {
-      if (!this.session) {
-        this.warn('Session is not yet initialized, can not test for authenticity.');
-        return false;
-      }
-
-      return this.session.isActive();
+      return !!this.user.get('id');
     },
 
     /**
@@ -261,12 +248,12 @@ function(Backbone, $, when) {
       }
 
       if (!this.isAuthorized() && this._matches(fragment, router.protected)) {
-        this.warn('Access to protected endpoint denied:', fragment);
+        console.warn('Access to protected endpoint denied:', fragment);
 
         return ACCESS_UNAUTHORIZED;
       }
       else if (this.isAuthorized() && this._matches(fragment, router.public)) {
-        this.warn('Access to public endpoint denied:', fragment);
+        console.warn('Access to public endpoint denied:', fragment);
 
         return ACCESS_OVERAUTHORIZED;
       }
@@ -303,10 +290,7 @@ function(Backbone, $, when) {
       return false;
     },
 
-    activateWorkspace: function(workspaceId) {
-      this.state.set('activeWorkspace', workspaceId);
-    }
   });
 
-  return new ApplicationRouter();
+  return new ApplicationRouter;
 });

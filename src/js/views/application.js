@@ -16,19 +16,30 @@ define([
   return View.extend({
     container: '#main',
     template: Template,
-    children: [ WorkspacesView, MilestonesView, StatusbarView, DatepickerView ],
+    children: [
+      DatepickerView,
+      WorkspacesView,
+      MilestonesView,
+      StatusbarView
+    ],
+
     events: {
       'submit form': 'refreshApiToken'
     },
 
-    requires: [ 'user', 'state' ],
+    requires: [ 'user', 'state', 'applicationRouter' ],
 
     mount: function() {
       this.statusbar = App.statusbar = _.findWhere(this._children, { name: 'Statusbar' });
+      this.$('.dropdown').dropdown();
+      this.listenTo(this.user, 'change:workspaces', this.toggleEnabled);
+      this.listenTo(this.state, 'change:activeWorkspace', this.toggleEnabled);
+      this.toggleEnabled();
     },
 
     templateData: function() {
       return {
+        user: this.user.toJSON(),
         date: this.state.date.format('LL')
       }
     },
@@ -37,26 +48,20 @@ define([
       this.state.set('date', this.picker.getMoment());
     },
 
-    refreshApiToken: function(e) {
-      var apiToken = this.$('[name="apiToken"]').val();
-      var that = this;
+    onLogout: function() {
+      this.user.clear();
+      this.applicationRouter.redirectTo('/');
+    },
 
-      App.apiToken = apiToken;
+    onReload: function() {
+      this.state.trigger('change:activeWorkspace');
+    },
 
-      that.statusbar.set('Logging in... please wait.');
+    toggleEnabled: function() {
+      var hasWorkspace = !!this.state.activeWorkspace;
 
-      $.consume(e);
-      $.ajaxCORS({
-        url: 'env'
-      }).then(function(data) {
-        that.statusbar.set(i18n.t('logged_in', 'Logged in.'));
-        that.user.set(data.user);
-        return data;
-      })
-      .otherwise(function(err) {
-        DEBUG.onError(error);
-        return err;
-      });
+      this.$('#content').toggleEnabled(hasWorkspace);
+      this.$('#workspaceRequiredAlert').toggle(!hasWorkspace);
     }
   });
 });
