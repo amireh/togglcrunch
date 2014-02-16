@@ -12,7 +12,7 @@ define('config', [ 'lodash' ], function(_) {
     version: '1.0.0',
     // This won't work until Toggl put us on the CORS origin whitelist.
     // apiHost: 'https://toggl.com/reports/api/v2',
-    apiHost: 'http://kodoware.com:9292/reports/api/v2',
+    apiHost: 'http://api.togglcrunch.com/reports/api/v2',
 
     dateFormat: 'YYYY[-]MM[-]DD',
 
