@@ -42,7 +42,9 @@ define([
     },
 
     set: function(value) {
-      return this.set('date', value);
+      this.save({ date: value });
+
+      return value;
     }
   });
 

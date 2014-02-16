@@ -107,7 +107,7 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
 
         that.loading.notify();
 
-        if (data.total_count > cursor) {
+        if (data.total_count != 0 && data.total_count > cursor) {
           // need to load next page
           console.warn('need to paginate');
           that.loadTimeEntries(page+1);
@@ -129,7 +129,7 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
     },
 
     setTimeEntries: function(entries, stats) {
-      console.debug('setting time entries:', entries);
+      console.debug('setting time entries:', entries, stats);
       this.user.set('time_entries', [], { silent: true });
       this.user.set('time_entries', entries);
       this.user.set('time_entry_stats', {

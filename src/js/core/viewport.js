@@ -172,10 +172,10 @@ define([ 'ext/lodash', 'ext/backbone', 'when' ], function(_, Backbone, when) {
 
       currentLayout = layout;
 
-      that.warn('Attaching layout: ', layout.name);
+      console.warn('Attaching layout: ', layout.name);
 
       return currentLayout._render().done(function() {
-        that.warn('Layout attached:' + currentLayout);
+        console.warn('Layout attached:' + currentLayout);
         return true;
       });
     },

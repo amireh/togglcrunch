@@ -27,7 +27,7 @@ define([ 'view', 'hbs!datepicker', 'pikaday'], function(View, Template, Pikaday)
     },
 
     changeDate: function() {
-      this.state.set('date', this.picker.getMoment());
+      this.state.date = this.picker.getMoment();
     }
   });
 });

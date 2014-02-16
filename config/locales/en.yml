@@ -1,2 +1,5 @@
 en:
   week: Week __number__
+  status:
+    login_prompt: >
+      You must login to proceed.

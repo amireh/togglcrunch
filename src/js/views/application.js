@@ -2,13 +2,11 @@ define([
   'view',
   'hbs!application',
   'views/milestones',
-  'views/statusbar',
   'views/workspaces',
   'views/datepicker'
 ], function(View,
   Template,
   MilestonesView,
-  StatusbarView,
   WorkspacesView,
   DatepickerView) {
   'use strict';
@@ -19,8 +17,7 @@ define([
     children: [
       DatepickerView,
       WorkspacesView,
-      MilestonesView,
-      StatusbarView
+      MilestonesView
     ],
 
     events: {
@@ -30,7 +27,6 @@ define([
     requires: [ 'user', 'state', 'applicationRouter' ],
 
     mount: function() {
-      this.statusbar = App.statusbar = _.findWhere(this._children, { name: 'Statusbar' });
       this.$('.dropdown').dropdown();
       this.listenTo(this.user, 'change:workspaces', this.toggleEnabled);
       this.listenTo(this.state, 'change:activeWorkspace', this.toggleEnabled);

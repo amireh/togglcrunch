@@ -12,15 +12,6 @@ define([
   'ext/backbone'
 ],
 function(CONFIG, when, pikaday, Backbone) {
-  Root.TRACE = function() {
-    try {
-      throw new Error();
-    } catch (e) {
-      console.debug('@TRACE@');
-      console.debug(e.stack);
-    }
-  };
-
   DEBUG.when = Root.when = when;
   DEBUG.onError = function(err) {
     console.error('Exception raised in promise chain:', err);
@@ -40,7 +31,7 @@ function(CONFIG, when, pikaday, Backbone) {
   _.defer(function() {
     DEBUG.user.set('name', 'Ahmad');
 
-    DEBUG.state.date = moment.utc('2014-02-13', 'YYYY-MM-DD');
+    // DEBUG.state.date = moment.utc('2014-02-13', 'YYYY-MM-DD');
     DEBUG.user.on('change:workspaces', function(ws) {
       setTimeout(function() {
         if (!DEBUG.applicationRouter.isAuthorized()) {

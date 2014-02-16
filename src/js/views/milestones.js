@@ -25,7 +25,7 @@ define([ 'view', 'hbs!milestones', 'views/datepicker' ], function(View, Template
     },
 
     show: function() {
-      this.$el.animate({ opacity: 'show' }, 750);
+      this.$el.animate({ opacity: 1 }, 750);
     },
 
     getMilestones: function() {

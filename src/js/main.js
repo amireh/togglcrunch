@@ -51,9 +51,10 @@ requirejs.config({
 require([
   'config/initializer',
   'core/viewport',
+  'core/director',
   'router',
   'models/state'
-], function(initialize, Viewport, Router, State) {
+], function(initialize, Viewport, Director, Router, State) {
   // Transform the blunt 'App' object into Core::State.
   //
   // App so far may contain callbacks by external scripts found in App.Callbacks
