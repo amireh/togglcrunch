@@ -65,9 +65,6 @@ require([
 
   initialize()
   .then(function() {
-    return Viewport.start();
-  })
-  .then(function() {
     return State.fetch().then(function() {
       if (State.get('apiToken')) {
         return State.user.fetch();
@@ -78,6 +75,8 @@ require([
     });
   })
   .always(function() {
+    return Viewport.start();
+  }).then(function() {
     return Router.start(true);
   })
   .catch(function(e) {

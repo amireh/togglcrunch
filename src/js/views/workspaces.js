@@ -1,4 +1,4 @@
-define([ 'view', 'hbs!workspaces' ], function(View, Template) {
+define([ 'view', 'hbs!workspaces', 'when' ], function(View, Template, when) {
   'use strict';
 
   return View.extend({
@@ -71,10 +71,6 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
       }
 
       this.current = this.state.activeWorkspace;
-      this.$('.active').removeClass('active');
-      this.$('[data-workspace="' + this.current.get('id') + '"]')
-        .parent()
-        .addClass('active');
 
       if (!this.current) {
         this.statusbar
@@ -83,6 +79,11 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
 
         return;
       }
+
+      this.$('.active').removeClass('active');
+      this.$('[data-workspace="' + this.current.get('id') + '"]')
+        .parent()
+        .addClass('active');
 
       this.statusbar
         .set(i18n.t('status.loading_time_entries', 'Loading time entries...'))

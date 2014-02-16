@@ -10,8 +10,9 @@ define('config', [ 'lodash' ], function(_) {
   var productionConfig = {
 
     version: '1.0.0',
-    apiHost: 'https://toggl.com/reports/api/v2',
-    // apiToken: '',
+    // This won't work until Toggl put us on the CORS origin whitelist.
+    // apiHost: 'https://toggl.com/reports/api/v2',
+    apiHost: 'http://kodoware.com:9292/reports/api/v2',
 
     dateFormat: 'YYYY[-]MM[-]DD',
 
@@ -35,7 +36,7 @@ define('config', [ 'lodash' ], function(_) {
 
   //>>excludeStart("production", pragmas.production);
   _.merge(productionConfig, {
-    apiHost: 'http://localhost:9292/reports/api/v2',
+    apiHost: 'http://localhost:9292/reports/api/v2'
   });
   //>>excludeEnd("production");
 

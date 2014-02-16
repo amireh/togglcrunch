@@ -2,7 +2,6 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require 'json'
 
 Bundler.require(:default)
 
@@ -37,16 +36,12 @@ before do
 
   if @auth.provided?
     if @auth.basic? && @auth.credentials
-      puts "Credentials: #{@auth.credentials}"
       @api_token = @auth.credentials.first
     end
   end
 end
 
 get '*' do |endpoint|
-  puts "intercepting endpoint: #{endpoint}"
-  puts params.inspect
-
   host = if @api_token
     [ TogglScheme, '://', @api_token, ':api_token@', TogglHost ].join('')
   else

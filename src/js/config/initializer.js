@@ -1,3 +1,5 @@
+this.DEBUG = {};
+
 define([
   'config/initializers/i18next',
   'config/initializers/jquery',
