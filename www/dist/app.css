@@ -6605,6 +6605,9 @@ button.close {
 #milestones section > h2 small.pull-right {
   line-height: 35px;
 }
+#milestones .panel {
+  box-shadow: none;
+}
 #applicationHeader .navbar-default {
   background: #333;
   border: none;

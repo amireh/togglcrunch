@@ -69,6 +69,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'production',
     'compile:locales',
     'compile:js',
     'compile:css'
