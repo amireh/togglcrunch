@@ -28,14 +28,19 @@ define([ 'view', 'hbs!statusbar' ], function(View, Template) {
     },
 
     showIndicator: function() {
-      this.$('.indicator').animate({
-        top: 150,
-        right: 150
-      }, 350);
+      this.$('.indicator').addClass('visible');
+      // this.$('.indicator').animate({
+      //   // top: 150,
+      //   right: 150
+      // }, 350);
     },
 
     hideIndicator: function() {
-      this.$('.indicator').animate({ top: 0, right: 0 }, 350);
+      this.$('.indicator').removeClass('visible');
+      // this.$('.indicator').animate({
+      //   // top: 0,
+      //   right: 0
+      // }, 350);
     }
   });
 });

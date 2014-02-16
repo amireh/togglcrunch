@@ -39,13 +39,11 @@ define([
         return this.applicationRouter.redirectTo('/login');
       }
 
-      console.debug('logged in, proceeding to app')
-
-      Viewport.attach(ApplicationView);
+      this.render(ApplicationView);
     },
 
     login: function() {
-      Viewport.attach(LoginView);
+      this.render(LoginView);
     },
 
     logout: function() {

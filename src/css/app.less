@@ -46,6 +46,8 @@ body {
   bottom: 0;
   width: 748px;
   z-index: 10;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .pika-single {
@@ -97,19 +99,37 @@ body {
   display: inline-block;
 }
 
-
 .la-anim-10 {
   position: fixed;
-  top: 0;
+  top: 200px;
   right: 0;
   width: 300px;
   height: 300px;
-  background: #222;
-  -webkit-transition: -webkit-transform 0.3s;
-  transition: transform 0.3s;
+  // background: #222;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
   -webkit-transform: translateX(100%) translateY(-100%) rotate(45deg);
   transform: translateX(100%) translateY(-100%) rotate(45deg);
   pointer-events: none;
+}
+
+.guest .la-anim-10 {
+  top: 150px;
+
+  &.visible {
+    right: 150px;
+  }
+}
+.member .la-anim-10 {
+  top: 50%;
+  margin-top: 75px;
+  margin-right: 75px;
+  right: 50%;
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+  }
 }
 
 .la-anim-10.la-animate {

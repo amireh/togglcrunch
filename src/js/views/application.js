@@ -27,10 +27,15 @@ define([
     requires: [ 'user', 'state', 'applicationRouter' ],
 
     mount: function() {
+      $('body').addClass('member').removeClass('guest');
       this.$('.dropdown').dropdown();
       this.listenTo(this.user, 'change:workspaces', this.toggleEnabled);
       this.listenTo(this.state, 'change:activeWorkspace', this.toggleEnabled);
       this.toggleEnabled();
+    },
+
+    unmount: function() {
+      $('body').addClass('guest').removeClass('member');
     },
 
     templateData: function() {

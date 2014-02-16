@@ -71,6 +71,10 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
       }
 
       this.current = this.state.activeWorkspace;
+      this.$('.active').removeClass('active');
+      this.$('[data-workspace="' + this.current.get('id') + '"]')
+        .parent()
+        .addClass('active');
 
       if (!this.current) {
         this.statusbar
@@ -129,7 +133,6 @@ define([ 'view', 'hbs!workspaces' ], function(View, Template) {
     },
 
     setTimeEntries: function(entries, stats) {
-      console.debug('setting time entries:', entries, stats);
       this.user.set('time_entries', [], { silent: true });
       this.user.set('time_entries', entries);
       this.user.set('time_entry_stats', {
