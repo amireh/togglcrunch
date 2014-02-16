@@ -4,6 +4,7 @@ requirejs.config({
     'text': '../../vendor/js/require/text',
     'jquery': '../../vendor/js/jquery/jquery-2.0.2',
     'jquery.jquerypp': '../../vendor/js/jquery/jquerypp.custom',
+    'bootstrap': '../../vendor/js/bootstrap',
     'when': '../../vendor/js/when',
     'store': '../../vendor/js/store',
     'lodash': '../../vendor/js/lodash/lodash.custom',
@@ -24,6 +25,7 @@ requirejs.config({
   shim: {
     'jquery': { exports: 'jQuery' },
     'jquery.jquerypp': [ 'jquery' ],
+    'bootstrap': [ 'jquery' ],
     'lodash': { exports: '_' },
     'underscore': { exports: '_' },
     'store': { exports: 'store' },

@@ -13,6 +13,10 @@ define([ 'view', 'hbs!login'], function(View, Template) {
 
     mount: function() {
       this.statusbar.set(i18n.t('status.login_prompt'));
+      this.$('[title]').popover({
+        html: true,
+        trigger: 'click'
+      });
     },
 
     onLogin: function(e) {

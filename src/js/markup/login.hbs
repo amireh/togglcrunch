@@ -17,7 +17,13 @@
           type="submit"
           class="btn btn-primary"
           value="{{t 'sign_in' 'Enter'}}" />
-        <span class="btn btn-default btn-sm">?</span>
+        <span
+          class="btn btn-default btn-sm"
+          data-content="{{t 'tooltips.api_token_help' }}"
+          title="{{t 'tooltips.api_token_help_title'}}"
+
+          data-placement="bottom"
+          data-trigger="click">?</span>
       </div>
     </div>
   </form>

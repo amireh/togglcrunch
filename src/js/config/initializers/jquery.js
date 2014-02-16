@@ -3,7 +3,8 @@
  */
 define([
   'ext/jquery',
-  'config'
+  'config',
+  'bootstrap'
 ], function($, Config) {
   'use strict';
 
@@ -32,6 +33,11 @@ define([
 
   // Disable disabled links!
   $(document.body).on('click', '.disabled, :disabled', $.consume);
+
+  $(document.body).tooltip({
+    selector: '[rel="tooltip"]',
+    html: false
+  });
 
   return $;
 });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Toggl Stats</title>
+    <title>TogglCrunch - Tracking Toggl data</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -17,6 +17,13 @@
   </head>
 
   <body>
+    <div id="loading_screen" class="text-center">
+      <h1>
+        TogglCrunch
+        <small>Tracking the time tracker</small>
+      </h1>
+      <p>Downloading app data... please wait.</p>
+    </div>
     <div id="main"></div>
 
     <script data-main="/dist/app.js" src="/vendor/js/require.js"></script>

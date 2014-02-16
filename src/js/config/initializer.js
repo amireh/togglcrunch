@@ -11,6 +11,7 @@ define([
   'core/controller',
   'models/state',
   'models/user',
+  'bootstrap'
   //>>excludeStart("production", pragmas.production);
   , 'config/initializers/debug'
   //>>excludeEnd("production");

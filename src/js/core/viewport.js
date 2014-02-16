@@ -139,7 +139,6 @@ define([ 'ext/lodash', 'ext/backbone', 'when' ], function(_, Backbone, when) {
         that.$el.append(view.$el);
 
         that.trigger('attached', view);
-        // that._status = null;
 
         return view;
       }).otherwise(function(error) {
