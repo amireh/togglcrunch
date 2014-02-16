@@ -104,8 +104,8 @@ module.exports = function(grunt) {
   grunt.registerTask('production',
   'Cleans up after the development environment.',
   function() {
-    shell.exec('[ -s www/src ] && rm www/src');
-    shell.exec('[ -s www/vendor ] && rm www/vendor');
     shell.exec('cp config/production/index.html.in www/index.html');
+    shell.exec('if [ -s www/src ]; then rm www/src; fi');
+    shell.exec('if [ -s www/vendor ]; then rm www/vendor; fi');
   });
 };
